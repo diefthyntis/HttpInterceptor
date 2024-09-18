@@ -1,0 +1,18 @@
+
+
+<h1>Périmètre de l'exemple httpInterceptor</h1>
+<div>
+Cette exemple montre comment gérer une autorisation avec un token factice initiliasé à aLanNeSTnéle27aoAut19SoixanteTrEIze
+<br>La fonction d'autorisation est activé en ajoutant httpInterceptorProviders dans les providers de app.module.ts
+<br>Cela indique à ANGULAR qu'il doit gérer un service d'autorisation
+<br>Le résultat concrêt est l'ajout d'une ligne nommé "Authorization" dans l'entête de chaque requête Htttp, comme suit<br>
+<b>Authorization: Bearer aLanNeSTnéle27aoAut19SoixanteTrEIze</b>
+</div><br><br>
+
+<h1>Liste de livres</h1>
+<div *ngIf="true">
+    <div *ngFor="let elementLivre of listeLivre">{{ elementLivre.id }}<br>
+        "{{ elementLivre.titre }}"<br>de {{ elementLivre.auteur }}
+      <!-- your html -->
+    </div>
+  </div>
