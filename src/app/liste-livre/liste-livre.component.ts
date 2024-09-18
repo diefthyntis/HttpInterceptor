@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { Livre } from '../livre.class';
+import { Livre } from '../models/livre.class';
+import { LivreService } from '../services/livre.service';
+
 
 
 
@@ -13,17 +15,18 @@ import { Livre } from '../livre.class';
 })
 export class ListeLivreComponent implements OnInit {
   listeLivre:Livre[]=[];
-  private databaseUrl = './assets/book.json';
-  public requete$!: Observable<any>;
-  
+  private databaseUrl = './assets/livres.json';
+  public requeteGet$!: Observable<any>;
+  public requetePost$!:Observable<any>;
+  public resultatPost!:Subscription;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,private livreService: LivreService) { }
 
   ngOnInit(): void {
     
-    this.requete$ =this.http.get<Livre>(this.databaseUrl)
+    this.requeteGet$ =this.http.get<Livre>(this.databaseUrl)
 
-    this.requete$.subscribe(tableau=> {
+    this.requeteGet$.subscribe(tableau=> {
       tableau.forEach((instance:Livre)=> this.listeLivre.push(instance));
       });
       
@@ -42,6 +45,19 @@ export class ListeLivreComponent implements OnInit {
     this.listeLivre.push(livre3);
     console.log(livre1);
 
+  }
+
+   // Fonction pour modifier un livre
+   modifierLivre() {
+    const unLivre = {
+      id: 10,
+      titre: 'Le portrait de Dorian Gray',
+      auteur: 'Oscar Wilde'
+    };
+    this.requetePost$ = this.livreService.modifierLivre(unLivre);
+    console.log(unLivre);
+    this.resultatPost = this.requetePost$.subscribe();
+  
   }
 
 
